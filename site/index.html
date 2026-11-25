@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://nickmastro.com/">
 <meta property="og:title" content="NickMastro.com | Mastro Talks">
 <meta property="og:description" content="News, commentary and analysis on Mount Vernon, NY from Nick Mastrogiorgio.">
-<meta property="og:image" content="https://nickmastro.com/img/salary-comparison.webp">
+<meta property="og:image" content="https://nickmastro.com/img/salary-comparison-share.jpg">
 <link rel="icon" href="logo-round.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -392,11 +392,15 @@ function open(id){
   const showHero=p.hero&&!(p.body||[]).some(b=>b&&b.img===p.hero);
   rb.innerHTML=`<div class="art${showHero?" hero":""}">${showHero?`<img src="${esc(p.hero)}" alt="${esc(p.heroAlt||"")}">`:(p.lead||p.id==='retirement-dinner')?city():art(p,i)}</div><div class="in"><span class="flag">${esc(p.cat)}</span><h1>${esc(p.title)}</h1><div class="by" style="margin-bottom:16px">${by}</div><p class="dek"><strong>${esc(p.dek)}</strong></p>${bodyHtml}${p.src?`<p class="sample" style="margin-top:24px">${esc(p.src)}</p>`:''}${p.real?'<p class="sample">Adapted from a post Nick shared on Facebook. The views expressed are his own.</p>':''}</div>`;
   try{dlg.showModal();}catch(_){dlg.setAttribute('open','');}
+  try{if(location.hash!=='#'+id)history.replaceState(null,'','#'+id);}catch(_){}
 }
 document.addEventListener('click',e=>{const t=e.target.closest('[data-id]');if(t&&!t.closest('dialog'))open(t.dataset.id);});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'){const t=e.target.closest&&e.target.closest('[data-id]');if(t)open(t.dataset.id);}});
 document.getElementById('rclose').addEventListener('click',()=>dlg.close());
 dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});
+dlg.addEventListener('close',()=>{try{if(P.some(x=>'#'+x.id===location.hash))history.replaceState(null,'',location.pathname);}catch(_){}});
+const route=()=>{const want=location.hash.slice(1)||window.OPEN_ARTICLE;if(want&&P.some(x=>x.id===want))open(want);};
+window.addEventListener('hashchange',route);route();
 
 const nf=document.getElementById('nform'),nm=document.getElementById('nmsg');
 nf.addEventListener('submit',async e=>{e.preventDefault();nm.textContent='Sending…';
