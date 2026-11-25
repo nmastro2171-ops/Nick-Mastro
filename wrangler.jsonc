@@ -1,0 +1,22 @@
+{
+  "name": "nickmastro",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "assets": {
+    "directory": "./site",
+    "binding": "ASSETS",
+    "not_found_handling": "none",
+    "html_handling": "auto-trailing-slash",
+    "run_worker_first": ["/api/*", "/wp-admin*", "/wp-login.php", "/xmlrpc.php", "/wp-includes/*"]
+  },
+  "d1_databases": [{ "binding": "DB", "database_name": "nickmastro-forms", "database_id": "a393add9-209b-4871-8b21-a6dded9bd5ac" }],
+  "secrets_store_secrets": [{ "binding": "GMAIL_APP_PASSWORD", "store_id": "f05acd4b07614496bf8f52c0f8a96b56", "secret_name": "gmail-app-password" }],
+  "vars": {
+    "SITE_LABEL": "NickMastro.com",
+    "FORM_TO": "nmastro.2171@gmail.com",
+    "FORM_FROM": "mastrotekcontactform@gmail.com",
+    "MAX_PER_HOUR": "5"
+  }
+}
